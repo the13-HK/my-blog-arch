@@ -12,8 +12,12 @@ export const postRouter = createTRPCRouter({
       };
     }),
 
-  getAllBlogs: publicProcedure.query(() => {
-    return db.post.findMany();
+  getUopeopleBlogs: publicProcedure.query(() => {
+    return db.uopeople.findMany();
+  }),
+
+  getGadgetsBlogs: publicProcedure.query(() => {
+    return db.gadgets.findMany();
   }),
 
   create: publicProcedure
@@ -22,7 +26,7 @@ export const postRouter = createTRPCRouter({
       // simulate a slow db call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      return ctx.db.post.create({
+      return ctx.db.uopeople.create({
         data: {
           title: input.name,
         },
@@ -32,7 +36,7 @@ export const postRouter = createTRPCRouter({
   postBlog: publicProcedure
     .input(z.object({ title: z.string(), description: z.string() }))
     .mutation((req) => {
-      return db.post.create({
+      return db.uopeople.create({
         data: {
           title: req.input.title,
           descriptiion: req.input.description,
@@ -41,7 +45,7 @@ export const postRouter = createTRPCRouter({
     }),
 
   getLatest: publicProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
+    return ctx.db.uopeople.findFirst({
       orderBy: { createdAt: "desc" },
     });
   }),
@@ -49,7 +53,7 @@ export const postRouter = createTRPCRouter({
   getDetailBlogs: publicProcedure
     .input(z.object({ id: z.number() }))
     .query((req) => {
-      return db.post.findUnique({
+      return db.uopeople.findUnique({
         where: {
           id: req.input.id,
         },
@@ -59,7 +63,7 @@ export const postRouter = createTRPCRouter({
   deleteBlog: publicProcedure
     .input(z.object({ id: z.number() }))
     .mutation((req) => {
-      return db.post.delete({
+      return db.uopeople.delete({
         where: {
           id: req.input.id,
         },

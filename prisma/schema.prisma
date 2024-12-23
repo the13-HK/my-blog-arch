@@ -9,13 +9,26 @@ generator client {
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
+    directUrl = env("DATABASE_URL") 
 }
 
 
- model Post {
+ model Uopeople {
      id           Int      @id @default(autoincrement())
      title        String   @default("")
      descriptiion String?
+     linkUrl      String?
+     createdAt DateTime @default(now())
+     updatedAt DateTime @updatedAt
+
+     @@index([title])
+ }
+
+ model Gadgets {
+     id           Int      @id @default(autoincrement())
+     title        String   @default("")
+     descriptiion String?
+     linkUrl      String?
      createdAt DateTime @default(now())
      updatedAt DateTime @updatedAt
 
